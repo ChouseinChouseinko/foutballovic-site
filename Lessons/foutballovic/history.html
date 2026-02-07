@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ο Βοηθος σου για το στοίχημα</title>
+  <link rel="icon" href="/foutballovic/assets/images/logo.jpg" type="image/png">
+  <link rel="stylesheet" href="assets/css/istoriko.css">
+  
+<link rel="apple-touch-icon" href="assets/images/logo.jpg">  <!-- iPhone/Android ana ekran için -->
+</head>
+<body>
+  <header class="fixed-header">
+    <div id="logo-container">
+        <img src="assets/images/FOUTBALL.png" alt="FOUTBALLLOVIC Betting Tips" id="site-logo">
+        <div class="social-instagram">
+          <a href="https://www.instagram.com/foutballovicbettingtips/" target="_blank" class="insta-link">
+            <img src="assets/images/Instagram.png" alt="Instagram" id="instalogo">
+            <span id="instatext">@foutballovicbettingtips</span>
+          </a>
+        </div>
+      </div>
+    <div class="MainNavigation">
+      <button id="agones">
+        <div class="action-buttons">
+          <a href="index.html" class="btn agones">Ηome</a>
+        </div>
+      </button>
+      <button id="standart">
+        <div class="action-buttons">
+          <a href="standartakia.html" class="btn agones">Στανδαρτάκια</a>
+        </div>
+      </button>
+      <button id="statistics">
+        <div class="action-buttons">
+          <a href="statistika.html" class="btn agones">Στατιστικα-Διάφορα</a>
+        </div>
+      </button>
+      <button id="history">
+        <div class="action-buttons">
+          <a href="agones.html" class="btn agones">Αγώνες</a>
+        </div>
+      </button>
+    </div>
+  </header>
+  <div class="history-container">
+    <h1 style="text-align:center; color:#fbbf24; margin:30px 0;">Ιστορικό Προγνωστικών</h1>
+
+    <!-- 1. Top Agones – eskiden tablo idi, şimdi kart -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Top Αγώνες Σήμερα</div>
+    <div class="section-content">
+      <div class="cards-grid" id="top-agones-cards"></div>
+    </div>
+  </div>
+
+    
+  <!-- 2. Dynato – class'ı değiştiriyoruz -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Το Δυνατό της Ημέρας</div>
+    <div class="section-content">
+      <div class="cards-grid">
+        <div class="prediction-card" id="history-dynato"></div>
+      </div>
+    </div>
+  </div>
+
+    <!-- 3. Agones – class'ı cards-grid yapıyoruz -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Αγώνες</div>
+    <div class="section-content cards-grid" id="agones-cards"></div>
+  </div>
+
+    <!-- 4. Standartakia – eskiden tablo idi, şimdi kart -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Στανταρτάκια</div>
+    <div class="section-content">
+      <div class="cards-grid" id="standartakia-cards"></div>
+    </div>
+  </div>
+</div>
+  <script>
+    // Accordion aç/kapa (aynı kalıyor)
+function toggleSection(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.classList.toggle('active');
+}
+
+// Ortak kart oluşturma fonksiyonu
+function createPredictionCard(item) {
+  const isWin = item.result?.includes('✓') || false;
+  const resultClass = isWin ? 'result-win' : 'result-lose';
+  
+  const gameTitle = item.game || 
+                   (item.home && item.away ? `${item.home} - ${item.away}` : 'Παιχνίδι');
+  
+  let html = `
+    <div class="prediction-card">
+      <h3>${gameTitle}</h3>
+  `;
+  
+  if (item.league) {
+    html += `<p><strong>Πρωτάθλημα:</strong> ${item.league}</p>`;
+  }
+  
+  html += `
+      <p><strong>Προβλεψη:</strong> ${item.prediction} @ ${item.odd}</p>
+      <p class="${resultClass}"><strong>Αποτέλεσμα:</strong> ${item.result || '-'}</p>
+    </div>
+  `;
+  
+  return html;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetch('assets/data/istorikos.json')
+    .then(r => r.ok ? r.json() : Promise.reject('Δεν υπαρχει το JSON αρχείο'))
+    .then(data => {
+
+      // 1. Top Agones
+      const topCont = document.getElementById('top-agones-cards');
+      let topHtml = '';
+      (data.top_agones || []).forEach(item => {
+        topHtml += createPredictionCard(item);
+      });
+      topCont.innerHTML = topHtml || '<p style="text-align:center; color:#94a3b8;">Δεν υπάρχουν δεδομένα</p>';
+
+      // 2. Dynato
+      const dynatoEl = document.getElementById('history-dynato');
+      if (data.dynato) {
+        dynatoEl.innerHTML = createPredictionCard(data.dynato);
+      } else {
+        dynatoEl.innerHTML = '<p style="text-align:center; color:#94a3b8;">Δεν υπάρχει Δυνατό</p>';
+      }
+
+      // 3. Agones
+      const agonesCont = document.getElementById('agones-cards');
+      let agonesHtml = '';
+      (data.agones || []).forEach(item => {
+        agonesHtml += createPredictionCard(item);
+      });
+      agonesCont.innerHTML = agonesHtml || '<p style="text-align:center; color:#94a3b8;">Δεν υπάρχουν αγώνες</p>';
+
+      // 4. Standartakia
+      const standCont = document.getElementById('standartakia-cards');
+      let standHtml = '';
+      (data.standartakia || []).forEach(item => {
+        standHtml += createPredictionCard(item);
+      });
+      standCont.innerHTML = standHtml || '<p style="text-align:center; color:#94a3b8;">Δεν υπάρχουν στανταρτάκια</p>';
+
+    })
+    .catch(err => {
+      console.error(err);
+      document.querySelector('.history-container').innerHTML += 
+        '<p style="text-align:center; color:#ef4444; margin:40px 0;">Geçmiş veriler yüklenemedi...</p>';
+    });
+});
+  </script>
+</body>
+</html>

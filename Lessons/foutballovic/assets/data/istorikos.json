@@ -1,0 +1,83 @@
+{
+    "date": "2026-02-05",
+    "top_agones": [
+      {
+        "game": "ΑΕΚ - ΟΛΥΜΠΙΑΚΟΣ",
+        "prediction": "X",
+        "odd": "3.20",
+        "result": "1-1 ✓"   
+      },
+      {
+        "game": "ΑΕΚ - ΟΛΥΜΠΙΑΚΟΣ",
+        "prediction": "X",
+        "odd": "3.20",
+        "result": "1-1 ✓"   
+      },
+      {
+        "game": "ΑΕΚ - ΟΛΥΜΠΙΑΚΟΣ",
+        "prediction": "X",
+        "odd": "3.20",
+        "result": "1-1 ✓"   
+      },
+      {
+        "game": "ΑΕΚ - ΟΛΥΜΠΙΑΚΟΣ",
+        "prediction": "X",
+        "odd": "3.20",
+        "result": "1-1 ✓"   
+      },
+      {
+        "game": "ΑΕΚ - ΟΛΥΜΠΙΑΚΟΣ",
+        "prediction": "X",
+        "odd": "3.20",
+        "result": "1-1 ✓"   
+      },
+      {
+        "game": "LYON - LILLE",
+        "prediction": "ΑΣΣΟ",
+        "odd": "2.00",
+        "result": "2-0 ✓"
+      }
+    ],
+  
+    "dynato": {
+      "league": "Premier League",
+      "game": "Manchester United - Fulham",
+      "prediction": "ΑΣΣΟ & Over 2.5",
+      "odd": "3.40",
+      "result": "2-1 ✓ +3.40 units"
+    },
+  
+    "agones": [
+      {
+        "home": "ΠΑΟΚ",
+        "away": "Ολυμπιακός",
+        "league": "Super League",
+        "prediction": "Over 2.5 & GG",
+        "odd": "2.15",
+        "result": "3-2 ✓ +2.15 units"
+      },
+      {
+        "home": "Άρης",
+        "away": "ΑΕΚ",
+        "league": "Super League",
+        "prediction": "ΑΕΚ -1 AH",
+        "odd": "2.38",
+        "result": "1-2 ✓ +2.38 units"
+      }
+    ],
+  
+    "standartakia": [
+      {
+        "game": "ΠΑΟΚ - Ολυμπιακός",
+        "league": "Super League",
+        "prediction": "Over 2.5 & GG @ 2.15",
+        "result": "✓ +2.15"
+      },
+      {
+        "game": "Μπάγερν - Λεβερκούζεν",
+        "league": "Bundesliga",
+        "prediction": "Over 3.5 @ 2.65",
+        "result": "✗ -1"
+      }
+    ]
+  }
