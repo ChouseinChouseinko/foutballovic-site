@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ο Βοηθος σου για το στοίχημα</title>
+  <link rel="icon" href="assets/images/logo.jpg" type="image/png">
+  <link rel="stylesheet" href="assets/css/factsStatistika.css">
+<link rel="apple-touch-icon" href="assets/images/logo.jpg">  <!-- iPhone/Android ana ekran için -->
+
+  
+</head>
+<body>
+  <div id="logo-container">
+    <img src="assets/images/FOUTBALL.png" alt="FOUTBALLLOVIC Betting Tips" id="site-logo">
+  </div>
+  <div class="MainNavigation">
+    <button id="agones">
+      <div class="action-buttons">
+        <a href="index.html" class="btn agones">Home</a>
+      </div>
+    </button>
+    <button id="standart">
+      <div class="action-buttons">
+        <a href="standartakia.html" class="btn agones">Στανδαρτάκια</a>
+      </div>
+    </button>
+    <button id="statistics">
+      <div class="action-buttons">
+        <a href="agones.html" class="btn agones">Αγώνες</a>
+      </div>
+    </button>
+    <button id="history">
+      <div class="action-buttons">
+        <a href="history.html" class="btn agones">Ιστορικό</a>
+      </div>
+    </button>
+  </div>
+    <div id="mainId"></div>
+        <article id="firstmsg"></article>
+
+        <section id="top-facts-section">
+          <h2 id="facts-title">Top Facts</h2>
+          <div id="facts-container" class="facts-list">
+
+          </div>
+        </section>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        fetch('assets/data/topfacts.json')   // ← yolu değiştir (ör: 'top-facts.json' veya 'data/top-facts.json')
+          .then(response => {
+            if (!response.ok) throw new Error('Top facts JSON okunamadı');
+            return response.json();
+          })
+          .then(data => {
+      
+            // Başlık güncelle
+            const titleElem = document.getElementById('facts-title');
+            if (titleElem && data.title) {
+              titleElem.textContent = data.title;
+            }
+      
+            // Facts container'ı doldur
+            const container = document.getElementById('facts-container');
+            if (container && data.facts && Array.isArray(data.facts)) {
+      
+              data.facts.forEach(fact => {
+                const item = document.createElement('div');
+                item.className = 'fact-item';
+      
+                item.innerHTML = `
+                  <div class="fact-text">${fact.text}</div>
+                  <div>
+                    <span class="fact-match">${fact.match || ''}</span>
+                    ${fact.odds_example ? `<span class="fact-odds">${fact.odds_example}</span>` : ''}
+                  </div>
+                `;
+      
+                container.appendChild(item);
+              });
+      
+            } else {
+              container.innerHTML = '<p style="text-align:center; color:#777;">Bugün için top fact yok...</p>';
+            }
+      
+          })
+          .catch(err => {
+            console.error('Top facts yüklenemedi:', err);
+            const container = document.getElementById('facts-container');
+            if (container) {
+              container.innerHTML = '<p style="text-align:center; color:red;">İstatistikler yüklenemedi...</p>';
+            }
+          });
+      });
+      </script>
+</body>
+</html>
